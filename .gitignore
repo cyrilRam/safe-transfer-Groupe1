@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Environnements virtuels
+.venv/
+env/
+venv/
+
+# IDEs
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+
+# Build & dist
+*.egg-info/
+build/
+dist/
+
+# Alembic
+alembic/versions/

@@ -1,0 +1,18 @@
+{
+  "LOCAL": {
+    "AllowedUrls": [],
+    "DataBase": {
+      "db_host": "localhost",
+      "db_port": "5433",
+      "db_name": "bank"
+    }
+  },
+  "DOCKER": {
+    "AllowedUrls": [],
+    "DataBase": {
+      "db_host": "bank-db",
+      "db_port": "5432",
+      "db_name": "bank"
+    }
+  }
+}
