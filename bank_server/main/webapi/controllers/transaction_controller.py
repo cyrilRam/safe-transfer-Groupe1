@@ -22,8 +22,8 @@ def get_transaction(transaction_id: UUID, service: transaction_service_dependenc
 
 
 @router.post("/", response_model=TransactionDto)
-def create_transaction(dto: TransactionDto, service: transaction_service_dependency):
-    return service.create_transaction(dto)
+def create_transaction(dto: TransactionDto, beneficiary_mail: str, service: transaction_service_dependency):
+    return service.create_transaction(dto, beneficiary_mail)
 
 
 @router.put("/", response_model=TransactionDto)

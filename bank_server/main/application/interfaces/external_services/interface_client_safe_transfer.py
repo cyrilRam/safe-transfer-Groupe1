@@ -1,6 +1,6 @@
-from bank_server.main.application.dto.transaction_dto import TransactionDto
+from uuid import UUID
 
 
 class ISafeTransferClient:
-    def execute_safe_transfer(self, dto: TransactionDto) -> None:
+    def execute_safe_transfer(self, amount: float, user_id: UUID, beneficiary_mail: str) -> UUID:
         pass

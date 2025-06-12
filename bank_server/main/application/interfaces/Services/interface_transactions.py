@@ -19,7 +19,7 @@ class ITransactionService(ABC):
         pass
 
     @abstractmethod
-    def create_transaction(self, dto: TransactionDto) -> TransactionDto:
+    def create_transaction(self, dto: TransactionDto, beneficiary_mail: str) -> TransactionDto:
         pass
 
     @abstractmethod

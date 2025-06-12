@@ -1,0 +1,8 @@
+from safe_transfer_server.main.persistance.config.database_connection import DataBaseConnection
+
+
+class DbDependency:
+    @staticmethod
+    def get_db_session():
+        db = DataBaseConnection()
+        yield from db.get_session()

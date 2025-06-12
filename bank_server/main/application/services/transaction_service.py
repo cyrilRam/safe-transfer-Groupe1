@@ -29,10 +29,14 @@ class TransactionService(ITransactionService):
     def get_transaction_by_id(self, transaction_id: UUID) -> TransactionDto:
         return TransactionMapper.to_dto(self.repository.get_by_id(transaction_id))
 
-    def create_transaction(self, dto: TransactionDto) -> TransactionDto:
+    def create_transaction(self, dto: TransactionDto, beneficiary_mail: str) -> TransactionDto:
+        account_sender = self.account_service.get_account_by_id(dto.account_id)
+        safe_transfer_id_trans = None
         if dto.transaction_type == "SAFETRANSFER_VIREMENT":
             try:
-                self.client_safe_transfer.execute_safe_transfer(dto)
+                safe_transfer_id_trans = self.client_safe_transfer.execute_safe_transfer(dto.amount,
+                                                                                         account_sender.user_id,
+                                                                                         beneficiary_mail)
             except Exception as e:
                 raise SafeTransferException(type(dto), str(e))
 
