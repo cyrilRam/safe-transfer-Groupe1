@@ -16,11 +16,11 @@ class IInterbankTransactionService(ABC):
         pass
 
     @abstractmethod
-    def get_all_pending_transactions_for_user(self, user_id: UUID) -> InterbankTransactionDto:
+    def get_all_pending_transactions_for_user(self, user_id: UUID) -> List[InterbankTransactionDto]:
         pass
 
     @abstractmethod
-    def get_all_detected_fraud_transactions(self, user_id: UUID) -> InterbankTransactionDto:
+    def get_all_detected_fraud_transactions(self) -> List[InterbankTransactionDto]:
         pass
 
     @abstractmethod
@@ -51,12 +51,13 @@ class IInterbankTransactionService(ABC):
         """
         pass
 
+    @abstractmethod
     def validate_beneficiary_code(self, transaction_id: UUID, code: str) -> bool:
         """
         check code benef
         passe la transact en validate
-        appelle /api/safe-transfer/transactions/{id}/validate (valide la transaction du sender chez sa banque + debite compte)
-        appelle /api/safe-transfert/beneficiary-transaction (cree la transact chez le benef et credite le compte)
+        appelle /safe-transfer/validation-sender (valide la transaction du sender chez sa banque + debite compte)
+        appelle /safe-transfer/creation-beneficiary (cree la transact chez le benef et credite le compte)
         :param transaction_id:
         :param code:
         :return:

@@ -10,3 +10,7 @@ class ITransactionRepository(IGeneralRepository[Transaction], ABC):
     @abstractmethod
     def get_all_by_account_id(self, account_id: UUID) -> List[Transaction]:
         pass
+
+    @abstractmethod
+    def get_by_safe_transfer_id(self, safe_transfer_id: UUID) -> Transaction:
+        pass

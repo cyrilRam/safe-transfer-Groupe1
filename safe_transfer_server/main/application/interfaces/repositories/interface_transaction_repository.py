@@ -11,3 +11,11 @@ class IInterbankTransactionRepository(IGeneralRepository[InterbankTransaction], 
     @abstractmethod
     def get_by_sender_id(self, sender_id: UUID) -> List[InterbankTransaction]:
         pass
+
+    @abstractmethod
+    def get_pending_transactions_for_user(self, user_id: UUID) -> List[InterbankTransaction]:
+        pass
+
+    @abstractmethod
+    def get_all_fraud_suspected_transactions(self) -> List[InterbankTransaction]:
+        pass

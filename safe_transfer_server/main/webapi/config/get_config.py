@@ -24,4 +24,8 @@ class ConfigurationSafeTransfer:
         db_var["password"] = os.getenv("DB_PASSWORD")
         return db_var
 
+    @staticmethod
+    def get_bank_server_url() -> str:
+        return ConfigurationSafeTransfer.get_config_var()['BankServerUrl']
+    
 # docker run --name safe-transfer-db -e POSTGRES_DB=safe-transfer -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=admin -p 5434:5432 -v safe-transfer-pgdata:/var/lib/postgresql/data -d postgres:15

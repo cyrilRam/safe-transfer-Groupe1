@@ -48,19 +48,20 @@ class TransactionService(ITransactionService):
     def delete_transaction(self, transaction_id: UUID) -> TransactionDto:
         return TransactionMapper.to_dto(self.repository.delete(transaction_id))
 
-    def validation_safe_transfer_for_sender(self, dto: TransactionDto) -> TransactionDto:
+    def validation_safe_transfer_for_sender(self, safe_transfer_id: UUID) -> TransactionDto:
         # check if the transaction exists
-        existing_transaction = self.repository.get_by_id(dto.transaction_id)
+        existing_transaction = self.repository.get_by_safe_transfer_id(safe_transfer_id)
         if not existing_transaction:
-            raise ObjectNotFoundException(object_type=type(dto), id_object=str(dto.transaction_id))
+            raise ObjectNotFoundException(object_type=TransactionDto,
+                                          id_object=str(existing_transaction.transaction_id))
 
         # update statut transaction
         existing_transaction.status = TransactionStatus.VALIDATED.value
         self.repository.update(existing_transaction)
 
         # debite account
-        account = self.account_service.get_account_by_id(dto.account_id)
-        account.balance = account.balance - dto.amount
+        account = self.account_service.get_account_by_id(existing_transaction.account_id)
+        account.balance = account.balance - existing_transaction.amount
         self.account_service.update_account(account)
 
         return TransactionMapper.to_dto(existing_transaction)

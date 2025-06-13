@@ -31,10 +31,10 @@ class ITransactionService(ABC):
         pass
 
     @abstractmethod
-    def validation_safe_transfer_for_sender(self, dto: TransactionDto) -> TransactionDto:
+    def validation_safe_transfer_for_sender(self, safe_transfer_id: UUID) -> TransactionDto:
         """
         update le statut de la transaction a validate et débite le montant du compte associé à la transaction
-        :param dto:
+        :param safe_transfer_id:
         :return:
         """
         pass

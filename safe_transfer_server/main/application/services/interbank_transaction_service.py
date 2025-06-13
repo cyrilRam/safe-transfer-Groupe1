@@ -5,6 +5,8 @@ from uuid import UUID
 from bank_server.main.domain.enums.transaction_enums import TransactionStatus
 from safe_transfer_server.main.application.dto.interbank_transaction_dto import InterbankTransactionDto, \
     InterbankTransactionCreationDto
+from safe_transfer_server.main.application.interfaces.external_services.bank_client.interface_bank_client import \
+    IBankClient
 from safe_transfer_server.main.application.interfaces.external_services.communication_services.IMailService import \
     IMailService
 from safe_transfer_server.main.application.interfaces.external_services.ia_services.interface_fraude_detector import \
@@ -22,11 +24,12 @@ from safe_transfer_server.main.domain.entities.transactions import InterbankTran
 class InterbankTransactionService(IInterbankTransactionService):
 
     def __init__(self, repository: IInterbankTransactionRepository, user_service: IUserService,
-                 fraud_detector: IFraudDetector, mail_service: IMailService):
+                 fraud_detector: IFraudDetector, mail_service: IMailService, bank_server: IBankClient):
         self.repository = repository
         self.user_service = user_service
         self.fraud_detector = fraud_detector
         self.mail_service = mail_service
+        self.bank_server = bank_server
 
     def get_all(self) -> List[InterbankTransactionDto]:
         entities = self.repository.get_all()
@@ -88,3 +91,31 @@ class InterbankTransactionService(IInterbankTransactionService):
             return True
 
         return False
+
+    def validate_beneficiary_code(self, transaction_id: UUID, code: str) -> bool:
+        transaction = self.repository.get_by_id(transaction_id)
+
+        # update status
+        if transaction.dest_code == code:
+            transaction.status = TransactionStatus.VALIDATED
+            updated = self.repository.update(transaction)
+
+            # send update to sender
+            self.bank_server.validate_sender_transaction(transaction_id)
+
+            # send the transaction to the benef
+            self.bank_server.create_beneficiary_transaction(InterbankTransactionMapper.to_dto(updated))
+
+            return True
+
+        return False
+
+    def get_all_pending_transactions_for_user(self, user_id: UUID) -> List[InterbankTransactionDto]:
+        transactions = self.repository.get_pending_transactions_for_user(user_id)
+        pending = [t for t in transactions if
+                   not t.double_auth_dest and t.status == TransactionStatus.PENDING_RECIPIENT]
+        return [InterbankTransactionMapper.to_dto(t) for t in pending]
+
+    def get_all_detected_fraud_transactions(self) -> List[InterbankTransactionDto]:
+        transactions = self.repository.get_all_fraud_suspected_transactions()
+        return [InterbankTransactionMapper.to_dto(t) for t in transactions]

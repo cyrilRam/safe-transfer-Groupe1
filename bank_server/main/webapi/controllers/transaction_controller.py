@@ -41,9 +41,9 @@ def get_transactions_by_account(account_id: UUID, service: transaction_service_d
     return service.get_all_transactions_for_account(account_id)
 
 
-@router.put("/safe-transfer/validation-sender", response_model=TransactionDto)
-def validation_safe_transfer_for_sender(dto: TransactionDto, service: transaction_service_dependency):
-    return service.validation_safe_transfer_for_sender(dto)
+@router.put("/{transaction_id}/safe-transfer/validation-sender", response_model=TransactionDto)
+def validation_safe_transfer_for_sender(transaction_id: UUID, service: transaction_service_dependency):
+    return service.validation_safe_transfer_for_sender(transaction_id)
 
 
 @router.post("/safe-transfer/creation-beneficiary", response_model=TransactionDto)

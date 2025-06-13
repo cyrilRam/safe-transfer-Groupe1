@@ -1,6 +1,7 @@
 from typing import List
 
-from safe_transfer_server.main.application.interfaces.external_services.ia_services import IFraudDetector
+from safe_transfer_server.main.application.interfaces.external_services.ia_services.interface_fraude_detector import \
+    IFraudDetector
 from safe_transfer_server.main.domain.entities.transactions import InterbankTransaction
 
 
