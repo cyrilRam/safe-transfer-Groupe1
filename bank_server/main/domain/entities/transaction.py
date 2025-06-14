@@ -21,5 +21,5 @@ class Transaction(Base):
     fraud_detected = Column(Boolean, default=False)
 
     transaction_type = Column(Enum(TransactionType), nullable=False)
-    safe_transaction_transaction_id = Column(Enum(TransactionType), nullable=True)
+    safe_transaction_id = Column(UUID(as_uuid=True), nullable=True)
     counterparty_name = Column(String(255), nullable=True)

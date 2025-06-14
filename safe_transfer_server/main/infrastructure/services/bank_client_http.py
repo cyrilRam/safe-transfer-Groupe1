@@ -9,23 +9,23 @@ from safe_transfer_server.main.webapi.config.get_config import ConfigurationSafe
 
 
 class BankHttpClient(IBankClient):
-    BASE_URL = f"{ConfigurationSafeTransfer.get_bank_server_url()}/"
+    BASE_URL = f"{ConfigurationSafeTransfer.get_bank_server_url()}"
 
     def validate_sender_transaction(self, transaction_id: UUID) -> bool:
-        url = f"{self.BASE_URL}/{transaction_id}/safe_transfer/validation-sender"
+        url = f"{self.BASE_URL}/transactions/{transaction_id}/safe-transfer/validation-sender"
         try:
-            response = requests.post(url)
+            response = requests.put(url)
             return response.status_code == 200
         except Exception as e:
             print(f"[BankClient] Error validating sender transaction: {e}")
             return False
 
     def create_beneficiary_transaction(self, transaction: InterbankTransactionDto) -> bool:
-        url = f"{self.BASE_URL}/safe_transfer/creation-beneficiary"
+        url = f"{self.BASE_URL}/transactions/safe-transfer/creation-beneficiary"
         try:
             payload = {
                 "transaction_id": str(transaction.id),
-                "account_id": str(transaction.user_dest_id),
+                "account_id": str(transaction.user_beneficiary.account_id),
                 "amount": transaction.amount,
                 "transaction_type": "SAFETRANSFER_VIREMENT",
                 "fraud_detected": False,

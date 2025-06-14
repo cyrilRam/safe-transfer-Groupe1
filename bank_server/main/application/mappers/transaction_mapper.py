@@ -13,7 +13,8 @@ class TransactionMapper:
             status=tx.status,
             fraud_detected=tx.fraud_detected,
             transaction_type=tx.transaction_type,
-            counterparty_name=tx.counterparty_name
+            counterparty_name=tx.counterparty_name,
+            safe_transaction_id=tx.safe_transaction_id
         )
 
     @staticmethod

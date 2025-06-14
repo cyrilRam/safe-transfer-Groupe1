@@ -26,10 +26,12 @@ class GeneralRepository(Generic[Entity]):
         return entity
 
     def update(self, entity: Entity) -> Entity:
+        merged = self.session.merge(entity)
         self.session.merge(entity)
         self.session.commit()
         self.session.refresh(entity)
-        return entity
+        self.session.refresh(merged)
+        return merged
 
     def delete(self, id: UUID) -> Optional[Entity]:
         obj = self.get_by_id(id)

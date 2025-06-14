@@ -17,4 +17,4 @@ class TransactionRepository(GeneralRepository[Transaction], ITransactionReposito
         return self.session.query(Transaction).filter_by(account_id=account_id).all()
 
     def get_by_safe_transfer_id(self, safe_transfer_id: UUID) -> Optional[Transaction]:
-        return self.session.query(Transaction).filter_by(account_id=safe_transfer_id).first()
+        return self.session.query(Transaction).filter_by(safe_transaction_id=safe_transfer_id).first()

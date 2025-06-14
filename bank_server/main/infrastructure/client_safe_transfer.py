@@ -1,6 +1,8 @@
+import json
 from uuid import UUID
 
 import requests
+from pydantic.json import pydantic_encoder
 
 from bank_server.main.application.interfaces.external_services.interface_client_safe_transfer import ISafeTransferClient
 from bank_server.main.infrastructure.dto.safe_transfer_dto import TransactionSafeTransferDto
@@ -15,11 +17,12 @@ class SafeTransferClient(ISafeTransferClient):
         url = f"{self.base_url}/transactions"
         safe_transfer_dto = TransactionSafeTransferDto(user_bank_id_source=user_id, amount=amount,
                                                        user_dest_mail=beneficiary_mail, transaction_type="TRANSFER")
+        payload = json.loads(json.dumps(safe_transfer_dto.dict(), default=pydantic_encoder))
+
         response = requests.post(
             url,
-            json=safe_transfer_dto.dict()
+            json=payload
         )
-
         if response.status_code != 201:
             raise Exception(f"Safe transfer failed: {response.status_code} - {response.text}")
 

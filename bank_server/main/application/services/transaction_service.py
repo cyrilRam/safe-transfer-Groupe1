@@ -39,8 +39,11 @@ class TransactionService(ITransactionService):
                                                                                          beneficiary_mail)
             except Exception as e:
                 raise SafeTransferException(type(dto), str(e))
-
-        return TransactionMapper.to_dto(self.repository.create(TransactionMapper.from_dto(dto)))
+        dto.amount = 0 - dto.amount
+        entity = TransactionMapper.from_dto(dto)
+        entity.safe_transaction_id = safe_transfer_id_trans
+        saved = self.repository.create(entity)
+        return TransactionMapper.to_dto(saved)
 
     def update_transaction(self, dto: TransactionDto) -> TransactionDto:
         return TransactionMapper.to_dto(self.repository.update(TransactionMapper.from_dto(dto)))
@@ -61,7 +64,7 @@ class TransactionService(ITransactionService):
 
         # debite account
         account = self.account_service.get_account_by_id(existing_transaction.account_id)
-        account.balance = account.balance - existing_transaction.amount
+        account.balance = account.balance + existing_transaction.amount
         self.account_service.update_account(account)
 
         return TransactionMapper.to_dto(existing_transaction)
@@ -69,11 +72,12 @@ class TransactionService(ITransactionService):
     def receive_validate_safe_transfer_for_beneficiary(self, dto: TransactionDto) -> TransactionDto:
         # create the transaction
         dto.status = TransactionStatus.VALIDATED.value
-        created_transaction = self.create_transaction(dto)
+        entity = TransactionMapper.from_dto(dto)
+        saved = self.repository.create(entity)
 
         # update account amount
         account = self.account_service.get_account_by_id(dto.account_id)
         account.balance = account.balance + dto.amount
         self.account_service.update_account(account)
 
-        return created_transaction
+        return TransactionMapper.to_dto(saved)

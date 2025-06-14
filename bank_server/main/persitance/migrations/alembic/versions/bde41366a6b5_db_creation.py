@@ -1,8 +1,8 @@
-"""add tables
+"""db creation
 
-Revision ID: 9925693c8747
+Revision ID: bde41366a6b5
 Revises: 
-Create Date: 2025-06-10 23:19:54.724665
+Create Date: 2025-06-14 14:41:48.005561
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '9925693c8747'
+revision: str = 'bde41366a6b5'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -49,6 +49,7 @@ def upgrade() -> None:
     sa.Column('status', sa.Enum('PENDING_USER', 'PENDING_FRAUD_CHECK', 'PENDING_RECIPIENT', 'VALIDATED', 'REFUSED', name='transactionstatus'), nullable=False),
     sa.Column('fraud_detected', sa.Boolean(), nullable=True),
     sa.Column('transaction_type', sa.Enum('CLASSIC_VIREMENT', 'SAFETRANSFER_VIREMENT', 'SAFETRANSFER_PRELEVEMENT', 'CLASSIC_PRELEVEMENT', 'CB', 'CHEQUE', name='transactiontype'), nullable=False),
+    sa.Column('safe_transaction_id', sa.UUID(), nullable=True),
     sa.Column('counterparty_name', sa.String(length=255), nullable=True),
     sa.ForeignKeyConstraint(['account_id'], ['accounts.id'], ),
     sa.PrimaryKeyConstraint('transaction_id')

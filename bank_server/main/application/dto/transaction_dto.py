@@ -16,3 +16,4 @@ class TransactionDto(BaseModel):
     fraud_detected: bool = False
     transaction_type: TransactionType
     counterparty_name: Optional[str] = None
+    safe_transaction_id: Optional[UUID] = None

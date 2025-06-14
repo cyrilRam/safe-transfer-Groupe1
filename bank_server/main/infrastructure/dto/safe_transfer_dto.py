@@ -1,8 +1,12 @@
+from enum import Enum
 from uuid import UUID
 
 from pydantic import BaseModel
 
-from bank_server.main.domain.enums.transaction_enums import TransactionType
+
+class TransactionType(str, Enum):
+    TRANSFER = "TRANSFER"
+    WITHDRAWAL = "WITHDRAWAL"
 
 
 class TransactionSafeTransferDto(BaseModel):
