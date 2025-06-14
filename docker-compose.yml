@@ -15,6 +15,19 @@ services:
     networks:
       - bank-network
 
+  safe-transfer-db:
+    image: postgres:15
+    container_name: safe-transfer-db
+    environment:
+      POSTGRES_DB: safe-transfer
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5434:5432"
+    volumes:
+      - safe-transfer-pgdata:/var/lib/postgresql/data
+    networks:
+      - safe-transfer-network
   bank-backend:
     build:
       context: ./bank_server
@@ -30,9 +43,30 @@ services:
       DB_PASSWORD: admin
     networks:
       - bank-network
+      - shared-network
+
+  safe-transfer-backend:
+    build:
+      context: ./safe_transfer_server
+      dockerfile: dockerfile
+    container_name: safe-transfer-backend
+    depends_on:
+      - safe-transfer-db
+    ports:
+      - "8081:8080"
+    environment:
+      ENV: DOCKER
+      DB_USER: admin
+      DB_PASSWORD: admin
+    networks:
+      - safe-transfer-network
+      - shared-network
 
 volumes:
   bank-pgdata:
+  safe-transfer-pgdata:
 
 networks:
   bank-network:
+  safe-transfer-network:
+  shared-network:

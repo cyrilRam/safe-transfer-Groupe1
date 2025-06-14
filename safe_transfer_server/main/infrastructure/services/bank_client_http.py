@@ -30,7 +30,7 @@ class BankHttpClient(IBankClient):
                 "transaction_type": "SAFETRANSFER_VIREMENT",
                 "fraud_detected": False,
                 "status": "VALIDATED",
-                "counterparty_name": transaction.user_dest_id,
+                "counterparty_name": transaction.user_sender.name,
             }
             response = requests.post(url, json=payload)
             return response.status_code == 200

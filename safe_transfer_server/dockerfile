@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+# Dépendances système
+RUN apt-get update && apt-get install -y gcc libffi-dev libssl-dev libpq-dev netcat-openbsd && rm -rf /var/lib/apt/lists/*
+
+# Travailler dans /app/bank_server
+WORKDIR /app/safe_transfer_server
+
+# Copier les fichiers à l'intérieur
+COPY . .
+
+# Installer les dépendances
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Spécifie le PYTHONPATH pour que les imports `bank_server.` fonctionnent
+ENV PYTHONPATH=/app
+
+# Rendre le script exécutable
+RUN chmod +x /app/safe_transfer_server/entrypoint.sh
+
+# Lancer l'application
+ENTRYPOINT ["/app/safe_transfer_server/entrypoint.sh"]
+
+EXPOSE 8080

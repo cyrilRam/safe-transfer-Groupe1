@@ -2,7 +2,6 @@ from datetime import datetime
 from typing import List
 from uuid import UUID
 
-from bank_server.main.domain.enums.transaction_enums import TransactionStatus
 from safe_transfer_server.main.application.dto.interbank_transaction_dto import InterbankTransactionDto, \
     InterbankTransactionCreationDto
 from safe_transfer_server.main.application.interfaces.external_services.bank_client.interface_bank_client import \
@@ -19,6 +18,7 @@ from safe_transfer_server.main.application.interfaces.services.interface_user_se
 from safe_transfer_server.main.application.mappers.interbank_transaction_mapper import InterbankTransactionMapper
 from safe_transfer_server.main.application.utils.code_tools import CodeTools
 from safe_transfer_server.main.domain.entities.transactions import InterbankTransaction
+from safe_transfer_server.main.domain.enums.transactions_enums import TransactionStatus
 
 
 class InterbankTransactionService(IInterbankTransactionService):

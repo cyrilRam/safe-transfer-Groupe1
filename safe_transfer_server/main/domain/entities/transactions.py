@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from sqlalchemy import Column, String, Float, DateTime, Boolean, Enum, ForeignKey
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 from safe_transfer_server.main.domain.enums.transactions_enums import TransactionStatus, TransactionType
 from safe_transfer_server.main.persistance.config.database_connection import Base
@@ -22,3 +23,6 @@ class InterbankTransaction(Base):
     transaction_type = Column(Enum(TransactionType), nullable=False)
     source_code = Column(String(10), nullable=True)
     dest_code = Column(String(10), nullable=True)
+
+    user_sender = relationship("User", foreign_keys=[user_source_id])
+    user_beneficiary = relationship("User", foreign_keys=[user_dest_id])

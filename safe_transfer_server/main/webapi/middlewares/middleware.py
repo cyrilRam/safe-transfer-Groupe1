@@ -3,8 +3,8 @@ import time
 from fastapi import Request
 from fastapi.responses import JSONResponse
 
-from bank_server.main.application.Exceptions.general_exceptions import CustomException
-from bank_server.main.webapi.middlewares.logger import logger
+from safe_transfer_server.main.application.Exceptions.general_exceptions import CustomException
+from safe_transfer_server.main.webapi.middlewares.logger import logger
 
 
 async def exception_handler(request: Request, exc: CustomException):
@@ -22,6 +22,7 @@ async def custom_middleware(request: Request, call_next):
         process_time = time.time() - start_time
         # Check if response status indicates an error (4xx or 5xx)
         if 400 <= response.status_code < 600:
+
             logger.error(
                 f"Request {request.method} {request.url.path} completed in {process_time:.2f} seconds with status {response.status_code}")
         else:

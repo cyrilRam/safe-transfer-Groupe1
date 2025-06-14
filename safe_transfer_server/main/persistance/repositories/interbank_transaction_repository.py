@@ -4,10 +4,10 @@ from uuid import UUID
 from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
-from bank_server.main.domain.enums.transaction_enums import TransactionStatus
 from safe_transfer_server.main.application.interfaces.repositories.interface_transaction_repository import \
     IInterbankTransactionRepository
 from safe_transfer_server.main.domain.entities.transactions import InterbankTransaction
+from safe_transfer_server.main.domain.enums.transactions_enums import TransactionStatus
 from safe_transfer_server.main.persistance.repositories.general_repository import GeneralRepository
 
 

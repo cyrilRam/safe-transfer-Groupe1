@@ -4,21 +4,22 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
+from safe_transfer_server.main.application.dto.user_dto import UserDto
 from safe_transfer_server.main.domain.enums.transactions_enums import TransactionStatus, TransactionType
 
 
 class InterbankTransactionDto(BaseModel):
     id: Optional[UUID] = None
-    user_source_id: UUID
-    user_dest_id: UUID
+    user_sender: UserDto
+    user_beneficiary: UserDto
     amount: float
     status: TransactionStatus
     transaction_date: Optional[datetime] = None
     double_auth_source: bool = False
     double_auth_dest: bool = False
     transaction_type: TransactionType
-    source_code: Optional[str] = None
-    dest_code: Optional[str] = None
+    sender_code: Optional[str] = None
+    beneficiary_code: Optional[str] = None
 
 
 class InterbankTransactionCreationDto(BaseModel):

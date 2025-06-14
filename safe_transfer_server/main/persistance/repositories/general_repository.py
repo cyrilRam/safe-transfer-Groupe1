@@ -3,7 +3,7 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
-from bank_server.main.persitance.config.database_connection import Base
+from safe_transfer_server.main.persistance.config.database_connection import Base
 
 Entity = TypeVar('Entity', bound=Base)
 

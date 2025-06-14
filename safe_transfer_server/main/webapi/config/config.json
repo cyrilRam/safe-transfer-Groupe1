@@ -11,10 +11,10 @@
   "DOCKER": {
     "AllowedUrls": [],
     "DataBase": {
-      "db_host": "bank-db",
+      "db_host": "safe-transfer-db",
       "db_port": "5432",
       "db_name": "safe-transfer"
     },
-    "BankServerUrl": "http://localhost:8080"
+    "BankServerUrl": "http://bank-backend:8080"
   }
 }

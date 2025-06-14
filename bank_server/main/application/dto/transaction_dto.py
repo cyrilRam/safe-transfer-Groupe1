@@ -16,10 +16,3 @@ class TransactionDto(BaseModel):
     fraud_detected: bool = False
     transaction_type: TransactionType
     counterparty_name: Optional[str] = None
-
-
-class TransactionSafeTransferDto(BaseModel):
-    user_bank_id_source: UUID
-    user_dest_mail: str
-    amount: float
-    transaction_type: TransactionType
