@@ -78,7 +78,7 @@ class InterbankTransactionService(IInterbankTransactionService):
         all_transactions_for_an_user = self.repository.get_by_sender_id(transaction.user_source_id)
 
         if transaction.source_code == code:
-            transaction.double_auth_dest = True
+            transaction.double_auth_source = True
             transaction.status = TransactionStatus.PENDING_FRAUD_CHECK
 
             if not self.fraud_detector.is_fraud(all_transactions_for_an_user, transaction):

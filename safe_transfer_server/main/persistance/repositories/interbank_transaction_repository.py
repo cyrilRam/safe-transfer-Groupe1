@@ -1,7 +1,7 @@
 from typing import Type
 from uuid import UUID
 
-from sqlalchemy import or_
+from sqlalchemy import or_, and_
 from sqlalchemy.orm import Session
 
 from safe_transfer_server.main.application.interfaces.repositories.interface_transaction_repository import \
@@ -24,12 +24,14 @@ class InterbankTransactionRepository(GeneralRepository[InterbankTransaction], II
     def get_pending_transactions_for_user(self, user_id: UUID) -> list[Type[InterbankTransaction]]:
         return self.session.query(InterbankTransaction).filter(
             or_(
-                InterbankTransaction.user_source_id == user_id,
-                InterbankTransaction.user_dest_id == user_id
-            ),
-            or_(
-                InterbankTransaction.status == TransactionStatus.PENDING_USER,
-                InterbankTransaction.status == TransactionStatus.PENDING_RECIPIENT
+                and_(
+                    InterbankTransaction.user_source_id == user_id,
+                    InterbankTransaction.status == TransactionStatus.PENDING_USER
+                ),
+                and_(
+                    InterbankTransaction.user_dest_id == user_id,
+                    InterbankTransaction.status == TransactionStatus.PENDING_RECIPIENT
+                )
             )
         ).all()
 
