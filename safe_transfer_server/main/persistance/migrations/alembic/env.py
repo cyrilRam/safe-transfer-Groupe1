@@ -13,6 +13,8 @@ from alembic import context
 from safe_transfer_server.main.persistance.config.database_connection import DataBaseConnection, Base
 import safe_transfer_server.main.domain.entities.user  # noqa: F401
 import safe_transfer_server.main.domain.entities.transactions  # noqa: F401
+import safe_transfer_server.main.domain.entities.chat_ia  # noqa: F401
+
 
 # Import ta classe DataBaseConnection et ta Base SQLAlchemy
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))

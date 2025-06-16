@@ -14,7 +14,7 @@ from safe_transfer_server.main.application.interfaces.services.interface_transac
 from safe_transfer_server.main.application.interfaces.services.interface_user_service import IUserService
 from safe_transfer_server.main.application.services.interbank_transaction_service import InterbankTransactionService
 from safe_transfer_server.main.infrastructure.services.bank_client_http import BankHttpClient
-from safe_transfer_server.main.infrastructure.services.fraud_detector_mock import MockFraudDetector
+from safe_transfer_server.main.infrastructure.services.ia.fraud_detector_mock import MockFraudDetector
 from safe_transfer_server.main.infrastructure.services.mock_mail_service import MockMailService
 from safe_transfer_server.main.persistance.repositories.interbank_transaction_repository import \
     InterbankTransactionRepository

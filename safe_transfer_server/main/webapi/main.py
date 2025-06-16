@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from safe_transfer_server.main.webapi.config.get_config import ConfigurationSafeTransfer
-from safe_transfer_server.main.webapi.controllers import user_controllers, interbank_transaction_controllers
+from safe_transfer_server.main.webapi.controllers import user_controllers, interbank_transaction_controllers,chat_ia_controller
 from safe_transfer_server.main.webapi.middlewares.logger import logger
 from safe_transfer_server.main.webapi.middlewares.middleware import custom_middleware
 
@@ -17,6 +17,7 @@ app.add_middleware(BaseHTTPMiddleware, dispatch=custom_middleware)
 
 app.include_router(user_controllers.router)
 app.include_router(interbank_transaction_controllers.router)
+app.include_router(chat_ia_controller.router)
 
 app.add_middleware(
     CORSMiddleware,
