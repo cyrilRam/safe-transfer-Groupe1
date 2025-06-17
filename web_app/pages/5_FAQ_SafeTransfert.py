@@ -4,7 +4,7 @@ import requests
 import streamlit as st
 from style.custom_css import apply_custom_style_sidebar
 from utils.sidebar import display_logo_in_sidebar
-
+import os
 apply_custom_style_sidebar()
 
 st.markdown("""
@@ -16,7 +16,8 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-BASE_API_URL = "http://localhost:8081"
+
+BASE_API_URL = os.getenv("SAFE_API", "http://localhost:8081")
 
 # --- Initialiser la session ---
 if "faq_session_id" not in st.session_state:

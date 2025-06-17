@@ -63,6 +63,23 @@ services:
       - safe-transfer-network
       - shared-network
 
+  streamlit-front:
+    build:
+      context: ./web_app
+      dockerfile: dockerfile
+    container_name: streamlit-front
+    depends_on:
+      - bank-backend
+      - safe-transfer-backend
+    ports:
+      - "8501:8501"
+    environment:
+      BANK_API: http://bank-backend:8080
+      SAFE_API: http://safe-transfer-backend:8080
+    networks:
+      - shared-network
+
+
 volumes:
   bank-pgdata:
   safe-transfer-pgdata:

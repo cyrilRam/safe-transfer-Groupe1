@@ -7,7 +7,8 @@ apply_custom_style()
 display_logo_in_sidebar()
 
 # --- Configuration ---
-BASE_API_URL = "http://localhost:8080"
+import os
+BASE_API_URL = os.getenv("BANK_API", "http://localhost:8080")
 USER_ID = "11111111-1111-1111-1111-111111111111"
 ACCOUNT_ID = "aaaaaaa1-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 

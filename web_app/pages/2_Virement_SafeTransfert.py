@@ -8,8 +8,9 @@ from utils.sidebar import display_logo_in_sidebar
 apply_custom_style()
 display_logo_in_sidebar()
 # --- Config ---
-BANK_API = "http://localhost:8080"
-SAFE_API = "http://localhost:8081"
+import os
+BANK_API = os.getenv("BANK_API", "http://localhost:8080")
+SAFE_API = os.getenv("SAFE_API", "http://localhost:8081")
 ACCOUNT_ID = "aaaaaaa1-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
 
 st.title("Virement SafeTransfer")

@@ -7,7 +7,8 @@ apply_custom_style()
 display_logo_in_sidebar()
 
 # --- Config ---
-SAFE_API = "http://localhost:8081"
+import os
+SAFE_API = os.getenv("SAFE_API", "http://localhost:8081")
 USER_ID = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
 
 st.markdown(f"## Compte de Bod Martin")
