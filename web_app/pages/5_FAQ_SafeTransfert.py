@@ -20,7 +20,7 @@ BASE_API_URL = "http://localhost:8081"
 
 # --- Initialiser la session ---
 if "faq_session_id" not in st.session_state:
-    st.session_state["faq_session_id"] = str(uuid.uuid4())
+    st.session_state["faq_session_id"] = None
     st.session_state["messages"] = []
 
 
@@ -44,12 +44,22 @@ def get_conversation_history(session_id):
 # --- Fonction pour envoyer une question ---
 def send_question(prompt):
     try:
-        r = requests.post(f"{BASE_API_URL}/chat-ia/ask", json={
-            "session_id": st.session_state["faq_session_id"],
-            "prompt": prompt
-        })
+        payload = {"prompt": prompt}
+        if st.session_state["faq_session_id"]:
+            payload["session_id"] = st.session_state["faq_session_id"]
+
+        r = requests.post(f"{BASE_API_URL}/chat-ia/ask", json=payload)
         r.raise_for_status()
-        return r.json().get("response", "Pas de réponse.")
+        data = r.json()
+
+        # Mise à jour du session_id
+        st.session_state["faq_session_id"] = data.get("session_id")
+
+        interactions = data.get("interactions", [])
+        if interactions:
+            return interactions[-1].get("response", "Pas de réponse.")
+        else:
+            return "Aucune réponse."
     except Exception as e:
         st.error(f"Erreur lors de l'envoi de la question : {e}")
         return "Erreur côté serveur."
@@ -67,15 +77,20 @@ with st.sidebar:
     st.markdown("---")
     display_logo_in_sidebar()
 
-# --- Affichage de l'historique ---
-history = get_conversation_history(st.session_state["faq_session_id"])
-st.session_state["messages"] = history if history else []
+# --- Affichage de l'historique au premier chargement ---
+if st.session_state["faq_session_id"] is not None and not st.session_state["messages"]:
+    history = get_conversation_history(st.session_state["faq_session_id"])
+    st.session_state["messages"] = history if history else []
 
+# --- Affichage des messages (une seule fois) ---
 for msg in st.session_state["messages"]:
     st.chat_message(msg["role"]).write(msg["message"])
 
 # --- Zone de saisie utilisateur ---
 if prompt := st.chat_input("Posez votre question ici..."):
     st.chat_message("user").write(prompt)
+    st.session_state["messages"].append({"role": "user", "message": prompt})
+
     response = send_question(prompt)
     st.chat_message("assistant").write(response)
+    st.session_state["messages"].append({"role": "assistant", "message": response})

@@ -58,6 +58,7 @@ services:
       ENV: DOCKER
       DB_USER: admin
       DB_PASSWORD: admin
+      COHERE_API_KEY: REF1qvbUGZc5THU0CnFyOeNIg8eEdfxAPHL8eibB
     networks:
       - safe-transfer-network
       - shared-network
