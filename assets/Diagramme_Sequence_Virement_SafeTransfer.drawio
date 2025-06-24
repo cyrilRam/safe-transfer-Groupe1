@@ -232,13 +232,13 @@
         <mxCell id="birosgB0VMsoBg-TfBzE-51" value="déclenchement échange fonds via Swift" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="500" y="1510" width="60" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="birosgB0VMsoBg-TfBzE-52" value="Comte crédité" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=5;exitPerimeter=0;" edge="1" parent="1">
+        <mxCell id="birosgB0VMsoBg-TfBzE-52" value="Compte crédité" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=5;exitPerimeter=0;" edge="1" parent="1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="615" y="1560" as="sourcePoint" />
             <mxPoint x="1010" y="1560" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="birosgB0VMsoBg-TfBzE-53" value="Comte débité" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
+        <mxCell id="birosgB0VMsoBg-TfBzE-53" value="Compte débité" style="html=1;verticalAlign=bottom;endArrow=block;curved=0;rounded=0;" edge="1" parent="1">
           <mxGeometry width="80" relative="1" as="geometry">
             <mxPoint x="605" y="1560" as="sourcePoint" />
             <mxPoint x="270" y="1560" as="targetPoint" />
