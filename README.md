@@ -32,6 +32,7 @@ multi-services.
 
 ```
 mon-projet/
+├── assets/                  # Diagrammes
 ├── bank_server/             # Backend pour la banque (comptes, transactions locales)
 ├── safe_transfer_server/    # Backend pour SafeTransfer (validation, IA, interbancaire)
 ├── web_app/                 # Interface front-end (Streamlit)
@@ -123,3 +124,43 @@ streamlit run web_app/Home.py
 L'interface est accessible sur : http://localhost:8501
 
 ## 5. Ressources
+
+Différents diagrammes permettant d'expliquer le projet et/ou le code sont présents dans le dossier `assets`
+
+### 5.1. Architecture High Level
+
+![Architecture High Level](./assets/Archi_High_Level.drawio)
+
+### 5.2. Diagrammes de classes
+
+Les diagrammes de classes complets ont été générés avec les bibliothèques python Graphviz et Pyreverse
+
+#### Diagramme de classes complet du bank-server :
+
+![Diagramme de classes bank-server](./assets/Diagramme_Classes_bank_server_Complet.png)
+
+#### Diagramme de classes spécifique au domaine User :
+
+![Diagramme de classes domaine user](./assets/Diagramme_Classes_Domaine_User.drawio)
+
+#### Diagramme de classes complet du safe-transfer-server :
+
+![Diagramme de classes safe-transfer-server](./assets/Diagramme_Classes_safe_transfer_server_Complet.png)
+
+### 5.3. Diagramme Clean Architecture
+
+![Diagramme clean architecture](./assets/Diagramme_Clean_Architecture.png)
+
+Source : https://medium.com/dotnet-hub/clean-architecture-with-dotnet-and-dotnet-core-aspnetcore-overview-introduction-getting-started-ec922e53bb97
+
+### 5.4. Diagramme de packages
+
+![Diagramme de packages](./assets/Diagramme_Packages.drawio)
+
+### 5.5. Diagramme de séquences
+
+![Diagramme de sequences virement SafeTransfer](./assets/Diagramme_Sequence_Virement_SafeTransfer.drawio)
+
+
+
+
